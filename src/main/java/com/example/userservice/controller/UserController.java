@@ -16,6 +16,6 @@ public class UserController {
 
     @GetMapping("/{id}")
     public String getUserById(@PathVariable long id) {
-        return "users " + id;
+        return "user id " + id;
     }
 }
