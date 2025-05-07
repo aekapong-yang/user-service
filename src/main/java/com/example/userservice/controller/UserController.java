@@ -20,4 +20,9 @@ public class UserController {
     public String updateById(@PathVariable long id) {
         return "update user id " + id;
     }
+
+    @PostMapping("/{id}")
+    public String createById(@PathVariable long id) {
+        return "create user id " + id;
+    }
 }
