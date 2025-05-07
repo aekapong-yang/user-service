@@ -21,8 +21,8 @@ public class UserController {
         return "update user id " + id;
     }
 
-    @PostMapping("/{id}")
-    public String createById(@PathVariable long id) {
-        return "create user id " + id;
+    @PostMapping()
+    public String createById() {
+        return "create user";
     }
 }
