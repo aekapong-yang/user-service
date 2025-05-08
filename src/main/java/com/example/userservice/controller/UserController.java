@@ -4,7 +4,6 @@ import com.example.userservice.dto.ApiResponse;
 import com.example.userservice.dto.user.GetUserAllRequest;
 import com.example.userservice.dto.user.GetUserAllResponse;
 import com.example.userservice.dto.user.GetUserByIdResponse;
-import com.example.userservice.model.User;
 import com.example.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
