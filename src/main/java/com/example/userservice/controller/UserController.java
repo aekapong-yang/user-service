@@ -1,19 +1,30 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.dto.ApiResponse;
+import com.example.userservice.dto.user.GetUserAllRequest;
+import com.example.userservice.dto.user.GetUserAllResponse;
+import com.example.userservice.dto.user.GetUserByIdResponse;
+import com.example.userservice.model.User;
+import com.example.userservice.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/users")
+@RequiredArgsConstructor
 public class UserController {
+    private final UserService userService;
 
     @GetMapping
-    public String getUserAll() {
-        return "get users all";
+    public ResponseEntity<ApiResponse<GetUserAllResponse>> getUserAll(GetUserAllRequest request) {
+        return userService.getUserAll(request);
     }
 
     @GetMapping("/{id}")
-    public String getUserById(@PathVariable long id) {
-        return "user " + id;
+    public ResponseEntity<ApiResponse<GetUserByIdResponse>> getUserById(
+            @PathVariable long id) {
+        return userService.getUserById(id);
     }
 
     @PutMapping("/{id}")
