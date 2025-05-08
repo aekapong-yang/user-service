@@ -1,8 +1,11 @@
 package com.example.userservice.factory;
 
 import com.example.userservice.dto.ApiResponse;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResponseFactory {
     public static <T> ResponseEntity<ApiResponse<T>> success() {
         return ResponseEntity.ok(ApiResponse.<T>builder()
