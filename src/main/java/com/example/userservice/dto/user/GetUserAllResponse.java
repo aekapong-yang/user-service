@@ -1,16 +1,20 @@
 package com.example.userservice.dto.user;
 
+import com.example.userservice.dto.PageResponse;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetUserAllResponse {
-    private List<User> users;
+@JsonPropertyOrder("items")
+public class GetUserAllResponse extends PageResponse {
+    private List<User> items;
 
     @Getter
     @Setter

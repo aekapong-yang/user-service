@@ -1,16 +1,16 @@
 package com.example.userservice.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.time.LocalDateTime;
+import lombok.*;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "USERS")
-public class User {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "users")
+public class User extends Audit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,5 +18,4 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private LocalDateTime createdAt;
 }

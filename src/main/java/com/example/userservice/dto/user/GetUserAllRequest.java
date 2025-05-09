@@ -1,12 +1,17 @@
 package com.example.userservice.dto.user;
 
-import lombok.*;
+import com.example.userservice.dto.PagingRequest;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
+@SuperBuilder
 @AllArgsConstructor
-public class GetUserAllRequest {
-    private String username;
+@NoArgsConstructor
+public class GetUserAllRequest extends PagingRequest {
+    private String searchValue;
 }
