@@ -17,4 +17,4 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
 logging:
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{X-Correlation-Id}] [%X{userId}] %-5level %logger - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{X-Correlation-Id}] [%X{User-Id}] %-5level %logger - %msg%n"

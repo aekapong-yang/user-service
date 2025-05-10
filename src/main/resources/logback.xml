@@ -14,8 +14,9 @@
                             "version":"${APP_VERSION}",
                             "app":"${APP_NAME}",
                             "x-correlation-id": "%X{X-Correlation-Id}",
-                            "user-id": "%X{userId}",
+                            "user-id": "%X{User-Id}",
                             "message": "%msg%throwable",
+                            "logger": "%logger{0}",
                             "level": "%level",
                             "thread": "%thread"
                         }
