@@ -6,7 +6,6 @@ import com.example.userservice.factory.ResponseFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +20,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-    private final MessageSource messageSource;
-
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ApiResponse<Object>> handleBusinessException(BusinessException ex) {
-        return ResponseFactory.error(ex.getErrorCode());
-    }
-
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
@@ -45,7 +37,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<Object>> handleAll(Exception ex) {
+    public ResponseEntity<ApiResponse<Object>> handleException(Exception ex) {
         return ResponseFactory.error(ErrorCode.GENERAL_ERROR, ex.getMessage());
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiResponse<Object>> handleBusinessException(BusinessException ex) {
+        return ResponseFactory.error(ex.getErrorCode());
+    }
+
+    @ExceptionHandler(ExternalException.class)
+    public ResponseEntity<ApiResponse<Object>> handleExternalException(ExternalException ex) {
+        return ResponseFactory.error(ex.getMessage(), ex.getHttpStatusCode());
     }
 }

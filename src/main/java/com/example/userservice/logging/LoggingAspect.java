@@ -1,7 +1,6 @@
 package com.example.userservice.logging;
 
 import com.example.userservice.context.MethodExecutionContext;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -28,14 +27,16 @@ public class LoggingAspect {
         log.info("Enter method: {} in class: {}", methodName, className);
     }
 
-    @AfterReturning(pointcut = "controllerMethod() || serviceMethod()", returning = "result")
-    public void logAfterMethod(JoinPoint joinPoint, Object result) throws JsonProcessingException {
-        String methodName = joinPoint.getSignature().getName();
-        String className = joinPoint.getSignature().getDeclaringType().getName();
-        long startTime = MethodExecutionContext.getStartTime();
-        long totalTime = System.currentTimeMillis() - startTime;
+    @AfterReturning(pointcut = "controllerMethod()", returning = "result")
+    public void logAfterControllerMethod(JoinPoint joinPoint, Object result) {
+        logAfterMethod(joinPoint);
 
-        log.info("Exit method: {} in class: {}. Total execution time: {} ms", methodName, className, totalTime);
+        MethodExecutionContext.remove(); // ✅ ป้องกัน memory leak
+    }
+
+    @AfterReturning(pointcut = "serviceMethod()", returning = "result")
+    public void logAfterServiceMethod(JoinPoint joinPoint, Object result) {
+        logAfterMethod(joinPoint);
     }
 
     @AfterThrowing(pointcut = "controllerMethod()", throwing = "ex")
@@ -44,6 +45,17 @@ public class LoggingAspect {
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
         log.error("Exception in {}.{} with args = {}, message = {}", className, methodName, args, ex.getMessage(), ex);
+
+        MethodExecutionContext.remove(); // ✅ ป้องกัน memory leak
+    }
+
+    private void logAfterMethod(JoinPoint joinPoint) {
+        String methodName = joinPoint.getSignature().getName();
+        String className = joinPoint.getSignature().getDeclaringType().getName();
+        long startTime = MethodExecutionContext.getStartTime();
+        long totalTime = System.currentTimeMillis() - startTime;
+
+        log.info("Exit method: {} in class: {}. Duration: {} ms", methodName, className, totalTime);
     }
 }
 

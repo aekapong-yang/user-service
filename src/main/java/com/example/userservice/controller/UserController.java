@@ -1,22 +1,20 @@
 package com.example.userservice.controller;
 
-import com.example.userservice.dto.ApiContext;
 import com.example.userservice.dto.ApiResponse;
 import com.example.userservice.dto.user.*;
 import com.example.userservice.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/v1/users")
 public class UserController {
     private final UserService userService;
-    private final ApiContext apiContext;
 
     @GetMapping
     public ResponseEntity<ApiResponse<GetUserAllResponse>> getUserAll(
@@ -34,14 +32,12 @@ public class UserController {
             @PathVariable Long id,
             @RequestBody @Valid PutUserByIdRequest request) {
         request.setId(id);
-        apiContext.setUserId(UUID.randomUUID().toString());
         return userService.updateUserById(request);
     }
 
     @PostMapping
     public ResponseEntity<ApiResponse<Object>> createUser(
             @RequestBody @Valid PostCreateUserRequest request) {
-        apiContext.setUserId(UUID.randomUUID().toString());
         return userService.createUser(request);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.userservice.config;
+package com.example.userservice.config.audit;
 
 import com.example.userservice.dto.ApiContext;
 import lombok.NonNull;
