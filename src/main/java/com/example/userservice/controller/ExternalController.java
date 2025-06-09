@@ -1,6 +1,6 @@
 package com.example.userservice.controller;
 
-import com.example.userservice.adaptor.jsonplaceholder.JsonPlaceHolderAdaptor;
+import com.example.userservice.adaptor.external.jsonplace.JsonPlaceHolderAdaptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

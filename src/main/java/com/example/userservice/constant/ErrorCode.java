@@ -15,6 +15,8 @@ public enum ErrorCode {
      * client error
      */
     INVALID_PARAMETER(Code.INVALID_PARAMETER, "invalid parameter", HttpStatus.BAD_REQUEST),
+    UNAUTHORIZED(Code.UNAUTHORIZED, "unauthorized", HttpStatus.UNAUTHORIZED),
+    FORBIDDEN(Code.FORBIDDEN, "forbidden", HttpStatus.FORBIDDEN),
 
     /***
      * resource not found

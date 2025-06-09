@@ -1,4 +1,4 @@
-package com.example.userservice.adaptor.jsonplaceholder;
+package com.example.userservice.adaptor.external.jsonplace;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

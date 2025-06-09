@@ -4,6 +4,8 @@ import lombok.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -13,4 +15,5 @@ import org.springframework.web.context.annotation.RequestScope;
 @RequestScope
 public class ApiContext {
     private String userId;
+    private List<String> userRoles;
 }

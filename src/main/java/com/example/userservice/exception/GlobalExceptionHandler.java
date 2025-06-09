@@ -38,16 +38,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Object>> handleException(Exception ex) {
+        log.error(ex.getMessage(), ex);
         return ResponseFactory.error(ErrorCode.GENERAL_ERROR, ex.getMessage());
     }
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiResponse<Object>> handleBusinessException(BusinessException ex) {
-        return ResponseFactory.error(ex.getErrorCode());
+        log.error(ex.getMessage(), ex);
+        return ResponseFactory.error(ex.getErrorCode(), ex.getMessage());
     }
 
     @ExceptionHandler(ExternalException.class)
     public ResponseEntity<ApiResponse<Object>> handleExternalException(ExternalException ex) {
+        log.error(ex.getMessage(), ex);
         return ResponseFactory.error(ex.getMessage(), ex.getHttpStatusCode());
     }
 }

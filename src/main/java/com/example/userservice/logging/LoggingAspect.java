@@ -3,7 +3,10 @@ package com.example.userservice.logging;
 import com.example.userservice.context.MethodExecutionContext;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -27,35 +30,15 @@ public class LoggingAspect {
         log.info("Enter method: {} in class: {}", methodName, className);
     }
 
-    @AfterReturning(pointcut = "controllerMethod()", returning = "result")
+    @AfterReturning(pointcut = "controllerMethod() || serviceMethod()", returning = "result")
     public void logAfterControllerMethod(JoinPoint joinPoint, Object result) {
-        logAfterMethod(joinPoint);
-
-        MethodExecutionContext.remove(); // ✅ ป้องกัน memory leak
-    }
-
-    @AfterReturning(pointcut = "serviceMethod()", returning = "result")
-    public void logAfterServiceMethod(JoinPoint joinPoint, Object result) {
-        logAfterMethod(joinPoint);
-    }
-
-    @AfterThrowing(pointcut = "controllerMethod()", throwing = "ex")
-    public void logException(JoinPoint joinPoint, Throwable ex) {
-        String className = joinPoint.getTarget().getClass().getSimpleName();
-        String methodName = joinPoint.getSignature().getName();
-        Object[] args = joinPoint.getArgs();
-        log.error("Exception in {}.{} with args = {}, message = {}", className, methodName, args, ex.getMessage(), ex);
-
-        MethodExecutionContext.remove(); // ✅ ป้องกัน memory leak
-    }
-
-    private void logAfterMethod(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getSignature().getDeclaringType().getName();
         long startTime = MethodExecutionContext.getStartTime();
-        long totalTime = System.currentTimeMillis() - startTime;
+        long totalTime = System.currentTimeMillis() - MethodExecutionContext.getStartTime();
 
         log.info("Exit method: {} in class: {}. Duration: {} ms", methodName, className, totalTime);
     }
+
 }
 
